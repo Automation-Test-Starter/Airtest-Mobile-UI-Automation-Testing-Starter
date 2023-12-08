@@ -80,13 +80,37 @@ Airtest IDE 是 Airtest 的图形化界面工具，可以用来录制脚本、�
 
 #### 安卓手机连接准备工作
 
-- 安装 ADB 驱动
+##### 安装 ADB 驱动
+
+adb 是 Android Debug Bridge 的缩写，是 Android SDK 中的一个工具，用于连接安卓设备，安装 adb 驱动的方式有两种，一种是安装 Android SDK，一种是安装 Android Studio。
+
+- 安装 Android SDK
+
+  1. 进入 [Android SDK 官网](https://developer.android.com/studio/releases/platform-tools)，下载对应系统版本的 Android SDK 压缩包
+  2. 解压 Android SDK 压缩包，将解压后的目录添加到环境变量 PATH 中
+  3. 打开命令行，输入 adb version 命令，查看 adb 是否安装成功
+  4. 如果安装成功，会显示 adb 的版本号
+   ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/H7CQqH.png)
+
+- 安装 Android Studio
+
+  1. 进入 [Android Studio 官网](https://developer.android.com/studio)，下载对应系统版本的 Android Studio 安装包
+  2. 双击安装包，按照提示完成安装
+  3. 打开 Android Studio，点击 Configure -> SDK Manager，勾选 Android SDK Platform-Tools，然后点击 OK 按钮，等待安装完成
+  4. 打开命令行，输入 adb version 命令，查看 adb 是否安装成功
+  5. 如果安装成功，会显示 adb 的版本号
+   ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/H7CQqH.png)
+
+##### 尝试连接手机
 
 - 打开手机的 USB 调试模式
 - 手机连接电脑
 - 手机连接电脑后，需要在手机上授权电脑的 USB 调试权限
-- 输入‘adb devices’命令，查看手机是否连接成功
-
+- 选择允许调试
+- 然后在电脑上输入‘adb devices’命令，查看手机是否连接成功
+- 如果连接成功，会显示手机的设备号
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/pqud3z.png)
+  
 #### Airtest 通过 USB 连接安卓手机
 
 #### Airtest 通过 WIFI 连接安卓手机
