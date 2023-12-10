@@ -15,3 +15,6 @@ Project demo reference:
 
 - [Airtest Android Demo](https://github.com/Automation-Test-Starter/Airtest-Android-Demo)
 - [Airtest iOS Demo](https://github.com/Automation-Test-Starter/Airtest-iOS-Demo)
+
+
+readme english version will update later
