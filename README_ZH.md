@@ -113,6 +113,9 @@ adb 是 Android Debug Bridge 的缩写，是 Android SDK 中的一个工具，�
   
 #### Airtest 通过 USB 连接安卓手机
 
+- 打开Airtest程序到主界面
+- 
+
 #### Airtest 通过 WIFI 连接安卓手机
 
 ### Airtest 连接 iPhone 手机
