@@ -203,16 +203,16 @@ adb shell pm dump <package_name> | grep -A 1 MAIN
 
 请将 `<package_name>` 替换为实际应用程序的包名。上述命令将输出包含启动活动的相关信息。
 
-例如，假设要获取应用程序 "com.sonymobile.calendar" 的包名和启动活动，可以执行以下步骤：
+例如，假设要获取应用程序 "com.android.calculator2" 的包名和启动活动，可以执行以下步骤：
 
 ```bash
 # 获取应用程序列表
 adb shell pm list packages
 
-# 在列表中找到 "com.sonymobile.calendar" 的包名
+# 在列表中找到 "com.android.calculator2" 的包名
 
 # 获取启动活动
-adb shell pm dump com.sonymobile.calendar | grep -A 1 MAIN
+adb shell pm dump com.android.calculator2 | grep -A 1 MAIN
 ```
 
 注意：这些命令可能在不同的设备或 Android 版本上有所不同，具体取决于设备和系统的配置。
@@ -221,7 +221,32 @@ adb shell pm dump com.sonymobile.calendar | grep -A 1 MAIN
 
 下面会实现一个小例子：打开手机上的计算器 app，然后输入 1+1=2，最后关闭计算器 app。
 
+sony 手机计算器 app 的包名是：com.android.calculator2，启动活动是：com.android.calculator2.CalculatorActivity
+
 ##### 截图模式
+
+- 打开 Airtest IDE，点击左侧的脚本编辑器，新建一个脚本文件，命名为：test_calculator.py
+- 在脚本文件中输入以下代码：
+
+```python
+
+# -*- encoding=utf8 -*-
+__author__ = "nao.deng"
+
+# 导入 Airtest 模块
+from airtest.core.api import *
+
+# 自动设置环境
+auto_setup(__file__)
+
+# 启动计算器 app
+start_app('com.android.calculator2')
+```
+
+- 点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app
+
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 点击 Airtest IDE 右侧的截图按钮，截图手机屏幕，截图后的图片会显示在 Airtest IDE 右侧的截图区域
 
 ##### 录制脚本模式
 
