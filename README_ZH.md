@@ -15,7 +15,7 @@
 - [Airtest Android Demo](https://github.com/Automation-Test-Starter/Airtest-Android-Demo)
 - [Airtest iOS Demo](https://github.com/Automation-Test-Starter/Airtest-iOS-Demo)
 
-- [Airtest-Mobile-UI-Automation-Testing-Starter](#airtest-mobile-ui-automation-testing-starter)
+- [Airtest-Mobile-UI-Aut- [Airtest-Mobile-UI-Automation-Testing-Starter](#airtest-mobile-ui-automation-testing-starter)
   - [Airtest 介绍](#airtest-介绍)
   - [Airtest 安装](#airtest-安装)
     - [安装 Python](#安装-python)
@@ -37,6 +37,15 @@
       - [Airtest 通过 USB 连接 iPhone 手机](#airtest-通过-usb-连接-iphone-手机)
       - [Airtest 通过 WIFI 连接 iPhone 手机](#airtest-通过-wifi-连接-iphone-手机)
   - [编写第一个 Airtest 脚本](#编写第一个-airtest-脚本)
+    - [安卓 app 测试版本](#安卓-app-测试版本)
+      - [获取安卓 app 包名和 activity 名](#获取安卓-app-包名和-activity-名)
+        - [获取已安装应用程序的列表](#获取已安装应用程序的列表)
+        - [获取特定应用程序的启动活动（activity）](#获取特定应用程序的启动活动activity)
+      - [Airtest 脚本编写](#airtest-脚本编写)
+        - [截图模式](#截图模式)
+        - [录制脚本模式](#录制脚本模式)
+        - [poco 模式](#poco-模式)
+    - [iOS app 测试版本](#ios-app-测试版本)
   - [Airtest 常用命令](#airtest-常用命令)
   - [Airtest 工程初始化](#airtest-工程初始化)
   - [Airtest 常用 API](#airtest-常用-api)
@@ -244,9 +253,49 @@ start_app('com.android.calculator2')
 ```
 
 - 点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app
-
 - 点击 Airtest IDE 的停止按钮，停止脚本运行
-- 点击 Airtest IDE 右侧的截图按钮，截图手机屏幕，截图后的图片会显示在 Airtest IDE 右侧的截图区域
+- 点击 Airtest IDE 上的 airtest 辅助窗区域的‘Touch’按钮 (touch)，进入截图模式
+- 截取计算器 app 上的 1 按钮，截图后会自动跳转到脚本编辑器，会自动添加一行代码截图的代码，如下所示：
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/4OvYKO.png)
+- 再次点击 Airtest IDE 上的 airtest 辅助窗区域的‘Touch’按钮 (touch)，进入截图模式
+- 截取计算器 app 上的 + 按钮，截图后会自动跳转到脚本编辑器，会自动添加一行代码截图的代码，如下所示：
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/AuyLQm.png)
+
+- 再次点击 Airtest IDE 上的 airtest 辅助窗区域的‘Touch’按钮 (touch)，进入截图模式
+- 截取计算器 app 上的 1 按钮，截图后会自动跳转到脚本编辑器，会自动添加一行代码截图的代码，如下所示：
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/RIcOvv.png)
+
+- 再次点击 Airtest IDE 上的 airtest 辅助窗区域的‘Touch’按钮 (touch)，进入截图模式
+- 截取计算器 app 上的 = 按钮，截图后会自动跳转到脚本编辑器，会自动添加一行代码截图的代码，如下所示：
+
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/TJ2LpM.png)
+
+- 然后点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app，然后输入 1+1=2
+
+- 再次点击 Airtest IDE 上的 airtest 辅助窗区域的‘assert_exists’按钮 (assert_exists)，进入截图模式
+- 截取计算器 app 结果区域上的 2，截图后会自动跳转到脚本编辑器，会自动添加一行代码截图的代码，如下所示：
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/lSksEa.png)
+
+- 然后点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app，然后输入 1+1=2，最后会断言计算器 app 结果区域上的 2 是否存在，如果存在，则断言成功，否则断言失败
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 最后输入以下代码，关闭计算器 app
+
+```python
+stop_app('com.android.calculator2')
+```
+
+- 整体的代码如下所示：
+
+ ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/psjc3S.png)
+
+- 然后点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app，然后输入 1+1=2，最后会断言计算器 app 结果区域上的 2 是否存在，如果存在，则断言成功，否则断言失败，最后关闭计算器 app
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 到这里，第一个 Airtest 脚本就编写完成了
+- 如果想要了解更多 Airtest 的 API，可以参考 [Airtest API 文档](https://airtest.netease.com/docs/api/)
+
+运行 demo 如下所示：
+
+![airtest-demo1](/readme_pics/airtest-demo1.gif)
 
 ##### 录制脚本模式
 
