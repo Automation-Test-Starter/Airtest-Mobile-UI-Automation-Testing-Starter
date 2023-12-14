@@ -44,7 +44,7 @@
       - [Airtest 脚本编写](#airtest-脚本编写)
         - [截图模式](#截图模式)
         - [录制脚本模式](#录制脚本模式)
-        - [poco 模式](#poco-模式)
+        - [Poco 模式](#Poco-模式)
     - [iOS app 测试版本](#ios-app-测试版本)
   - [Airtest 常用命令](#airtest-常用命令)
   - [Airtest 工程初始化](#airtest-工程初始化)
@@ -234,7 +234,9 @@ sony 手机计算器 app 的包名是：com.android.calculator2，启动活动�
 
 ##### 截图模式
 
-- 打开 Airtest IDE，点击左侧的脚本编辑器，新建一个脚本文件，命名为：test_calculator.py
+> 前期均会以.air 脚本文件的形式编写脚本，后面会介绍如何将.air 脚本文件转换成.py 脚本文件
+
+- 打开 Airtest IDE，点击左侧的脚本编辑器，新建一个.air 脚本文件，命名为：demo.air
 - 在脚本文件中输入以下代码：
 
 ```python
@@ -297,9 +299,134 @@ stop_app('com.android.calculator2')
 
 ![airtest-demo1](/readme_pics/airtest-demo1.gif)
 
-##### 录制脚本模式
+##### Poco 模式
 
-##### poco 模式
+- 打开 Airtest IDE，点击左侧的脚本编辑器，新建一个.air 脚本文件，命名为：test_calculator_Poco.py
+
+- 在脚本文件中输入以下代码：
+
+```python
+
+# -*- encoding=utf8 -*-
+__author__ = "nao.deng"
+
+# 导入 Airtest 模块 和 Poco 模块
+from airtest.core.api import *
+from Poco.drivers.android.uiautomation import AndroidUiautomationPoco
+Poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=False)
+
+# 自动设置环境
+auto_setup(__file__)
+
+# 启动计算器 app
+start_app('com.android.calculator2')
+```
+
+- 点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 点击 Airtest IDE 上的 Poco 辅助窗区域的设备类型切换框，选择 Android 设备
+- 然后点击 Poco 辅助窗区域的设备类型切换框旁的 Poco UI 树锁定按钮，进入 Poco Pause 模式（锁定后手机上打开 app 的 UI 树不会再进行变动，可以选择 app 上不同的 UI 定位）
+- 然后点击 Poco 辅助窗区域的设备类型切换框旁的 Poco 定位按钮，进入 Poco 定位模式
+- 然后点击计算器 app 上的 1 按钮，Poco 定位模式会在 Poco UI 树列表下展示对于的 UI 定位，右键选择对应的 UI 定位，选择‘UI path-code’，然后代码会自动添加一行代码，如下所示：
+
+```python
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/digit_1")
+```
+
+- 然后给上述代码添加一个点击事件，用来模拟点击操作，如下所示：
+
+```python
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/digit_1").click()
+```
+
+- 然后按照上述步骤依次添加 +、1、=、2 的 UI 定位和点击事件，最后的代码如下所示：
+
+```python
+# -*- encoding=utf8 -*-
+__author__ = "nao.deng"
+
+from airtest.core.api import *
+
+auto_setup(__file__)
+
+# import
+from poco.drivers.android.uiautomation import AndroidUiautomationPoco
+poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=False)
+
+
+start_app('com.android.calculator2')
+
+# click ‘1’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/digit_1").click()
+# click ‘+’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/op_add").click()
+# click ‘1’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/digit_1").click()
+
+# click ‘=’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/eq").click()
+```
+
+- 然后点击计算器 app 上的 结果区域，Poco 定位模式会在 Poco UI 树列表下展示对于的 UI 定位，右键选择对应的 UI 定位，选择‘UI path-code’，然后代码会自动添加一行代码，如下所示：
+
+```python
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result")
+```
+
+- 这里需要断言计算器算出来的结果是否正确，所以需要获取计算器 app 结果区域的 text，然后断言 text 是否等于 2，通过检查对应 UI 定位的具体信息，如下图所示
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/erUudl.png)
+
+- 发现对应 UI 定位存在 text 属性，所以可以通过 text 属性获取计算器 app 结果区域的 text，然后断言 text 是否等于 2，所以需要给上述代码添加一个获取 text 的方法，如下所示：
+
+```python
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result").get_text()
+```
+
+- 接下来断言 text 是否等于 2，所以需要给上述代码添加一个断言方法，如下所示：
+
+```python
+assert_equal(poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result").get_text(), '2')
+```
+
+- 最后的代码如下所示：
+
+```python
+# -*- encoding=utf8 -*-
+__author__ = "nao.deng"
+
+from airtest.core.api import *
+
+auto_setup(__file__)
+
+# import
+from poco.drivers.android.uiautomation import AndroidUiautomationPoco
+poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=False)
+
+start_app('com.android.calculator2')
+
+# click ‘1’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/digit_1").click()
+# click ‘+’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/op_add").click()
+# click ‘1’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/digit_1").click()
+
+# click ‘=’
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/pad_pager").offspring("com.android.calculator2:id/eq").click()
+
+# alert result equal 2
+assert_equal(poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result").get_text(), '2')
+```
+
+- 然后点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app，然后输入 1+1=2，最后会断言计算器 app 结果区域上的 2 是否存在，如果存在，则断言成功，否则断言失败，最后关闭计算器 app
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 到这里，第一个 Airtest poco 脚本就编写完成了
+
+运行 demo 如下所示：
+
+![airtest-demo2](/readme_pics/airtest-demo2.gif)
+
+##### Poco 录制脚本模式
 
 ### iOS app 测试版本
 
