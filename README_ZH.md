@@ -428,6 +428,96 @@ assert_equal(poco("android.widget.FrameLayout").offspring("android:id/content").
 
 ##### Poco 录制脚本模式
 
+- 打开 Airtest IDE，点击左侧的脚本编辑器，新建一个.air 脚本文件，命名为：test_calculator_Poco_record.py
+
+- 在脚本文件中输入以下代码：
+
+```python
+# -*- encoding=utf8 -*-
+__author__ = "nao.deng"
+# import airtest and poco
+from airtest.core.api import *
+
+from poco.drivers.android.uiautomation import AndroidUiautomationPoco
+poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=False)
+
+auto_setup(__file__)
+
+# 启动计算器 app
+start_app('com.android.calculator2')
+```
+
+- 点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 点击 Airtest IDE 上的 Poco 辅助窗区域的设备类型切换框，选择 Android 设备
+- 然后点击 Poco 辅助窗区域的设备类型切换框旁的 Poco auto recording  录制按钮，进入 Poco 自动录制模式
+- 这个时候将鼠标移动到 Airtest IDE 连接的安卓手机上的计算器 app，依次点击 `1`、`+`、`1` 和`=`
+- 然后 Airtest IDE 会自动录制下刚才的操作并生成如下代码：
+
+```python
+poco("com.android.calculator2:id/digit_1").click()
+poco("com.android.calculator2:id/op_add").click()
+poco("com.android.calculator2:id/digit_1").click()
+poco("com.android.calculator2:id/eq").click()
+```
+
+- 然后点击计算器 app 上的 结果区域，Poco 定位模式会在 Poco UI 树列表下展示对于的 UI 定位，右键选择对应的 UI 定位，选择‘UI path-code’，然后代码会自动添加一行代码，如下所示：
+
+```python
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result")
+```
+
+- 这里需要断言计算器算出来的结果是否正确，所以需要获取计算器 app 结果区域的 text，然后断言 text 是否等于 2，通过检查对应 UI 定位的具体信息，如下图所示
+  ![ ](https://cdn.jsdelivr.net/gh/naodeng/blogimg@master/uPic/erUudl.png)
+
+- 发现对应 UI 定位存在 text 属性，所以可以通过 text 属性获取计算器 app 结果区域的 text，然后断言 text 是否等于 2，所以需要给上述代码添加一个获取 text 的方法，如下所示：
+
+```python
+poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result").get_text()
+```
+
+- 接下来断言 text 是否等于 2，所以需要给上述代码添加一个断言方法，如下所示：
+
+```python
+assert_equal(poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result").get_text(), '2')
+```
+
+- 最后的代码如下所示：
+  
+```python
+# -*- encoding=utf8 -*-
+__author__ = "nao.deng"
+# import
+from airtest.core.api import *
+from poco.drivers.android.uiautomation import AndroidUiautomationPoco
+poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=False)
+
+auto_setup(__file__)
+
+start_app('com.android.calculator2')
+
+poco("com.android.calculator2:id/digit_1").click()
+poco("com.android.calculator2:id/op_add").click()
+poco("com.android.calculator2:id/digit_1").click()
+poco("com.android.calculator2:id/eq").click()
+
+result = poco("android.widget.FrameLayout").offspring("android:id/content").offspring("com.android.calculator2:id/result").get_text()
+
+assert_equal(result,'2')
+
+stop_app('com.android.calculator2')
+```
+
+- 然后点击 Airtest IDE 的运行按钮，运行脚本，如果运行成功，会打开手机上的计算器 app，然后输入 1+1=2，最后会断言计算器 app 结果区域上的 2 是否存在，如果存在，则断言成功，否则断言失败，最后关闭计算器 app
+- 点击 Airtest IDE 的停止按钮，停止脚本运行
+- 到这里，第一个 Airtest poco 录制脚本就编写完成了
+
+demo 流程如下所示：
+
+后续补充链接
+
+> demo 录制过程中出现了一点小插曲，就是使用 poco 录制脚本时，没引入 poco 模块导致调试代码报错，引入 poco 模块后运行正常，这是由于我录制的时候没重置 poco 环境，大家按照流程操作的时候不会出现该问题
+
 ### iOS app 测试版本
 
 ## Airtest 常用命令
