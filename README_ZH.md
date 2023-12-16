@@ -15,7 +15,7 @@
 - [Airtest Android Demo](https://github.com/Automation-Test-Starter/Airtest-Android-Demo)
 - [Airtest iOS Demo](https://github.com/Automation-Test-Starter/Airtest-iOS-Demo)
 
-- [Airtest-Mobile-UI-Aut- [Airtest-Mobile-UI-Automation-Testing-Starter](#airtest-mobile-ui-automation-testing-starter)
+- [Airtest-Mobile-UI-Automation-Testing-Starter](#airtest-mobile-ui-automation-testing-starter)
   - [Airtest 介绍](#airtest-介绍)
   - [Airtest 安装](#airtest-安装)
     - [安装 Python](#安装-python)
@@ -43,8 +43,8 @@
         - [获取特定应用程序的启动活动（activity）](#获取特定应用程序的启动活动activity)
       - [Airtest 脚本编写](#airtest-脚本编写)
         - [截图模式](#截图模式)
-        - [录制脚本模式](#录制脚本模式)
-        - [Poco 模式](#Poco-模式)
+        - [Poco 模式](#poco-模式)
+        - [Poco 录制脚本模式](#poco-录制脚本模式)
     - [iOS app 测试版本](#ios-app-测试版本)
   - [Airtest 常用命令](#airtest-常用命令)
   - [Airtest 工程初始化](#airtest-工程初始化)
@@ -56,6 +56,7 @@
     - [CI/CD 集成](#cicd-集成)
     - [集成 allure 报告](#集成-allure-报告)
   - [Airtest 常见问题](#airtest-常见问题)
+  - [参考资料](#参考资料)
 
 ## Airtest 介绍
 
@@ -539,3 +540,5 @@ demo 流程如下所示：
 ### 集成 allure 报告
 
 ## Airtest 常见问题
+
+## 参考资料
